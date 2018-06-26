@@ -94,3 +94,24 @@
   ((kbd "C-M-C") "ratclick 5")
   ((kbd "C-q") "ratcontrol-click 0")
   ((kbd "C-r") "meta RET"))
+
+(defcommand ratcontrol-help () ()
+  (message "
+::::::::Ratcontrol Help::::::::
+::::::::::Navigation:::::::::::
+C-p                      Cut Up
+C-n                    Cut Down
+C-f                   Cut Right
+C-b                    Cut Down
+:::::::::::::Misc::::::::::::::
+C-q               Reset Pointer
+C-r     Send RET Char to Window
+:::::::::::Clicking::::::::::::
+C-c        Left Click and Reset
+M-c       Right Click and Reset
+C-C                  Left Click
+M-C                 Right Click
+::::::::::Not Working::::::::::
+C-M-c                Ratclick 4
+C-M-C                Ratclick 5"))
+
