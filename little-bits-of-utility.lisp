@@ -58,6 +58,17 @@
 	   (pop list)
 	   hold))))
     
-    
    ;;; a handy littl command for listing all the ttf fonts stumpwm can see with the font module, and formatting them to 
    ;;; four in a row. 
+
+(defmacro conde (&body body)
+  (if (not body)
+      nil
+      `(let ((return-list (cons  (if ,(car body)
+				     ,(cadr body)) 
+				 (conde ,@(rest (rest body))))))
+	 return-list)))
+;;; a macro that conds everything. think of it like a giant when statement. usage as follows:
+;;; (conde 
+;;;	(eq 11 11) (format t "hi")
+;;;	(eq 54 43) (format t "bye"))
