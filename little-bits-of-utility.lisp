@@ -1,8 +1,7 @@
 (defmacro list-instance (props &optional (all-groups *run-or-raise-all-groups*)
 				 (all-screens *run-or-raise-all-screens*)
 				 (base 0))
-  (if (not props)
-       nil
+  (when props
        `(let ((property-match (append (find-matching-windows ',(car props) ,all-groups ,all-screens)
 				     (list-instance ,(rest props) ,all-groups ,all-screens 
 						    ,(+ base 1)))))
