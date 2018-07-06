@@ -72,3 +72,21 @@
 ;;; (conde 
 ;;;	(eq 11 11) (format t "hi")
 ;;;	(eq 54 43) (format t "bye"))
+
+(defmacro conde-t (&body body)
+  (when body
+     (let ((reter (gensym)))
+	`(let ((,reter (if ,(car body)
+			   (cons ,(cadr body) (conde-t ,@(cddr body)))
+			   (conde-t ,@(cddr body)))))
+	    ,reter))))
+;;; a macro just like conde but it only returns whatever evaluates as true. 
+;;; for example usage:
+;;; (conde-t 
+;;;	(eq 4 4) (format t "hi~%")
+;;;	(eq 4 5) (format t "Bye")
+;;;	(eq 5 5) (+ 1 2 3)
+;;;	t nil)
+;;; would return 
+;;; (nil 6 nil) 
+;;; with the side effect of writing hi to the repl. 
