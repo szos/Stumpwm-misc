@@ -9,6 +9,12 @@
 ;;; window-placement.lisp. To preserve current functionality Ive tacked on the word fuzzy 
 ;;; to these functions, and threw them in a different file loaded by my init.lisp.
 
+(defcommand test-usage-pull/run-cmd (cmd pulley) ((:shell "exec: ")
+					   (:rest "or pull: "))
+  (if-let ((win (fuzzy-finder `((:title ,pulley)))))
+    (pull-window win)
+    (run-shell-command cmd)))
+
 (defun flatten-list (l)
   (if l
       (if (atom l)
