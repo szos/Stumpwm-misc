@@ -10,7 +10,10 @@
 ;;; to these functions, and threw them in a different file loaded by my init.lisp.
 
 (defcommand test-usage-pull/run-cmd (cmd pulley) ((:shell "exec: ")
-					   (:rest "or pull: "))
+						  (:rest "or pull: "))
+  "This command takes a shell command and a substring to search for in the title 
+of windows. If no windows match or the user quits at the window menu the shell 
+command is run. Otherwise the selected window is pulled. "
   (if-let ((win (fuzzy-finder `((:title ,pulley)))))
     (pull-window win)
     (run-shell-command cmd)))
