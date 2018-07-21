@@ -9,6 +9,7 @@
 ;;; window-placement.lisp. To preserve current functionality Ive tacked on the word fuzzy 
 ;;; to these functions, and threw them in a different file loaded by my init.lisp.
 
+;;; Example Usage
 (defcommand test-usage-pull/run-cmd (cmd pulley) ((:shell "exec: ")
 						  (:rest "or pull: "))
   "This command takes a shell command and a substring to search for in the title 
@@ -19,6 +20,21 @@ do anything you want with it. raise it, pull it, delete it, etc."
     (pull-window win)
     (run-shell-command cmd)))
 
+(defcommand do-then-find () ()
+  "choose what to do (raise or pull) then find the window."
+  (eval (cadr (select-from-menu (current-screen) 
+				'(("pull" (pull-window (fuzzy-finder '((:class "macs")))))
+				  ("raise" (raise-window (fuzzy-finder '((:class "macs"))))))))))
+
+(defcommand find-then-do () ()
+  "find a window, then choose to pull, raise or focus it. "
+  (let ((win (fuzzy-finder '((:class "mac")))))
+    (eval (cadr (select-from-menu (current-screen)
+				  `(("pull" (pull-window ,win))
+				    ("raise" (raise-window ,win))
+				    ("focus" (focus-window ,win t))))))))
+
+;;; Functions and definitions
 (defun flatten-list (l)
   (if l
       (if (atom l)
