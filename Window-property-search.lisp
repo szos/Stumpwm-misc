@@ -13,7 +13,8 @@
 						  (:rest "or pull: "))
   "This command takes a shell command and a substring to search for in the title 
 of windows. If no windows match or the user quits at the window menu the shell 
-command is run. Otherwise the selected window is pulled. "
+command is run. Otherwise the selected window is pulled. Win is a window, you can 
+do anything you want with it. raise it, pull it, delete it, etc."
   (if-let ((win (fuzzy-finder `((:title ,pulley)))))
     (pull-window win)
     (run-shell-command cmd)))
