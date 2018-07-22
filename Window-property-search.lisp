@@ -20,19 +20,37 @@ do anything you want with it. raise it, pull it, delete it, etc."
     (pull-window win)
     (run-shell-command cmd)))
 
-(defcommand do-then-find () ()
-  "choose what to do (raise or pull) then find the window."
-  (eval (cadr (select-from-menu (current-screen) 
-				'(("pull" (pull-window (fuzzy-finder '((:class "macs")))))
-				  ("raise" (raise-window (fuzzy-finder '((:class "macs"))))))))))
-
-(defcommand find-then-do () ()
+(defcommand find-then-do (str type) ((:string "Search term: ")
+				     (:string "Property to search: "))
   "find a window, then choose to pull, raise or focus it. "
-  (let ((win (fuzzy-finder '((:class "mac")))))
+  (let ((win (fuzzy-finder `((,(if (char= (char type 0) #\:)
+					(read-from-string type)
+					(read-from-string (concatenate 'string ":" type)))
+				    ,str)))))
     (eval (cadr (select-from-menu (current-screen)
 				  `(("pull" (pull-window ,win))
 				    ("raise" (raise-window ,win))
-				    ("focus" (focus-window ,win t))))))))
+				    ("focus" (focus-all ,win))
+				    ("delete" (delete-window ,win))))))))
+
+(defcommand do-then-find (str type) ((:string "Search term: ")
+				     (:string "Property to search: "))
+  "choose what to do (raise or pull) then find the window."
+  (let ((arg `((,(if (char= (char type 0) #\:) ;; check if the user provided a : or not. if not
+		     (read-from-string type) ;; push one on to generate the correct symbols for the
+		     (read-from-string (concatenate 'string ":" type))) ;; fuzzy finder
+		 ,str))))
+    (eval (cadr 
+	   (select-from-menu 
+	    (current-screen) 
+	    `(("pull" (pull-window 
+		       (fuzzy-finder ',arg)))
+	      ("raise" (raise-window 
+			(fuzzy-finder ',arg)))
+	      ("focus" (focus-all
+			(fuzzy-finder ',arg)))
+	      ("delete" (delete-window 
+			 (fuzzy-finder ',arg)))))))))
 
 ;;; Functions and definitions
 (defun flatten-list (l)
