@@ -60,7 +60,7 @@ do anything you want with it. raise it, pull it, delete it, etc."
 	  (mapcan #'custom-flatten l))))
 
 (defun window-matches-properties-fuzzy (window &key class instance type role title)
-  "Returns T if window matches all the given properties"
+  "Returns T if window matches any of the given properties"
   (and
    (if class (search class (window-class window)) t)
    (if instance (search instance (window-res window)) t)
