@@ -53,7 +53,21 @@ do anything you want with it. raise it, pull it, delete it, etc."
 			 (fuzzy-finder ',arg)))))))))
 
 ;;; Functions and definitions
+(defun pull (win &optional (all-groups *run-or-raise-all-groups*))
+  "currently only supports pulling from all groups. todo: implement all screens.
+Pulls the window or signals an error with a message"
+  (cond
+    ((not (equal (window-group win) (current-group)))
+     (if all-groups
+	 (progn
+	   (move-window-to-group win (current-group))
+	   (pull-window win))
+	 (message "Window is not in the current group, and all-groups is nil.")))
+    (t
+     (pull-window win))))
+
 (defun flatten-list (l)
+  "Flattens a list of sublists."
   (if l
       (if (atom l)
 	  (list l)
