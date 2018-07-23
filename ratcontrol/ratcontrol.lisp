@@ -6,8 +6,8 @@
 
 ;; set up this structure for the file: parameters, then functions, then commands, then keymaps.
 
-;; (export '(ratcontrol-cut-down ratcontrol-cut-up ratcontrol-cut-left ratcontrol-cut-right
-;; 	  ratcontrol-initialize ratcontrol-help))
+(export '(ratcontrol-cut-down ratcontrol-cut-up ratcontrol-cut-left ratcontrol-cut-right
+			      ratcontrol-initialize ratcontrol-help))
 
 ;; parameters for tracking the frame
 (defvar *resolution* '(1920 1080))
