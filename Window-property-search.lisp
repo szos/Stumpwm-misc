@@ -23,8 +23,8 @@ do anything you want with it. raise it, pull it, delete it, etc."
 (defcommand find-then-do (str type) ((:string "Search term: ")
 				     (:string "Property to search: "))
   "find a window, then choose to pull, raise or focus it. "
-  (let ((win (fuzzy-finder `((,(if (char= (char type 0) #\:)
-					(read-from-string type)
+  (let ((win (fuzzy-finder `((,(if (char= (char type 0) #\:) ;; check if the user included a : in the type. 
+					(read-from-string type) ;; if not throw it in there. 
 					(read-from-string (concatenate 'string ":" type)))
 				    ,str)))))
     (eval (cadr (select-from-menu (current-screen)
