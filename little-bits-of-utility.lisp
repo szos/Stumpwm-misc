@@ -89,3 +89,22 @@
 ;;; would return 
 ;;; (nil 6 nil) 
 ;;; with the side effect of writing hi to the repl. 
+
+;;; heres a little macro called if* which can act like if, or if with an implicit progn
+(defmacro if* (test eval-t eval-f)
+  `(if ,test
+       ,(if (listp (car `,eval-t))
+	    `(progn ,@eval-t)
+	    `,eval-t)
+       ,(if (listp (car `,eval-f))
+	    `(progn ,@eval-f)
+	    `,eval-f)))
+;;; heres some example usage:
+;;; (if* t
+;;;      (format t "hi")
+;;;      ((format t "nope")
+;;;       (format t "bye")))
+;;; would get expanded into 
+;;; (if t
+;;;     (format t "hi")
+;;;     (progn (format t "nope") (format t "bye")))
