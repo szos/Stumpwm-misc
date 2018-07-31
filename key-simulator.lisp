@@ -18,6 +18,14 @@
 	  (sim-key-unbinder ,kmap))
 	 (t
 	  nil)))))
+
+(defun sim-key-binder (kmap)
+  (define-key *top-map* (kbd (caar kmap)) (format nil "meta ~S" (cdar kmap)))
+  (when (rest kmap) (sim-key-binder (rest kmap))))
+
+(defun sim-key-unbinder (kmap)
+  (undefine-key *top-map* (kbd (caar kmap)))
+  (when (rest kmap) (sim-key-unbinder (rest kmap))))
     
 ;;;; example usage (all commands are run through meta, and must be valid keys):
 (define-simulation-keymap firefox "Firefox" '(("C-v" . "SunPageDown") ("M-v" . "SunPageUp")))
