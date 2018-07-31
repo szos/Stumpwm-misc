@@ -19,6 +19,6 @@
 	 (t
 	  nil)))))
     
-;;;; example usage:
+;;;; example usage (all commands are run through meta, and must be valid keys):
 (define-simulation-keymap firefox "Firefox" '(("C-v" . "SunPageDown") ("M-v" . "SunPageUp")))
 (add-hook *focus-window-hook* 'simulation-keys-firefox)
