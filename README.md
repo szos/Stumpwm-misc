@@ -3,6 +3,8 @@ A collection of my hacking on stumpwm. everything from modules to small bits of 
 
 Ratcontrol is a pointer controller for stumpwm.
 
+key-simulator.lisp attempts to simulate keys based on the class of the current window, a la EXWM.
+
 Window-property-search.lisp allows you to search and return windows based on substrings. 
 
 System-control.lisp is a set of closures useful for manipulating volume, brightness, etc. 
