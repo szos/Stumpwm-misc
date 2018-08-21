@@ -31,19 +31,20 @@
      (setf (third *with-window*) ,restrict-class)
      (add-hook *focus-window-hook* 'with-window-hanger)
      (run-shell-command ,cmd)))
-     
-     
- (defun with-window-hanger (cwin lwin)
+
+(defun with-window-hanger (cwin lwin)
   (declare (ignore lwin))
   ;; (when (atom (second *with-window*))
   ;;   (setf (second *with-window*) (list (second *with-window*))))
   (if (third *with-window*)
       (when (equal (window-class cwin)
 		   (third *with-window*))
-	(if (second *with-window*)
-	    (reduce (first *with-window*) (cons  cwin (second *with-window*)))
-	    (funcall (first *with-window*) cwin))
+	(if (not (second *with-window*))
+	    (funcall (first *with-window*) cwin)
+	    (reduce (first *with-window*) (cons  cwin (second *with-window*))))
 	(remove-hook *focus-window-hook* 'with-window-hanger))
       (progn
-	(reduce (first *with-window*) (cons cwin (second *with-window*)))
+	(if (second *with-window*)
+	    (reduce (first *with-window*) (cons cwin (second *with-window*)))
+	    (funcall (first *with-window*) cwin))
 	(remove-hook *focus-window-hook* 'with-window-hanger))))
