@@ -20,6 +20,9 @@
 ;;; This will run alsamixer in a terminal, which would normally have the class "Xfce4-terminal",
 ;;; and reclassify it once it opens. 
 
+;;(with-open-windows "cool-retro-term" nil #'float-window (current-group)
+;;;This will float the window once its running. 
+
 (defparameter *with-window*
 ;  "function, arguments, class restrictor."
   '(nil nil nil))
