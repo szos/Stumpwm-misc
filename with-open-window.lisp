@@ -11,6 +11,8 @@
 ;;; opens, then the function will be run prematurely.
 
 ;;; A note on writing functions for this macro - the first argument MUST be reserved for the window.
+;;; ADDITIONALLY: the function must take at least two arguments, the window and something else. 
+;;; this is due to bugs in my code which im working on currently. 
 
 ;;; Here is some example usage:
 ;; (with-open-window "Xfce4-terminal -e alsamixer" nil #'reclassify-window "Alsamixer")
