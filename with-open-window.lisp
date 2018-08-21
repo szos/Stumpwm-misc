@@ -27,13 +27,13 @@
 ;  "function, arguments, class restrictor."
   '(nil nil nil))
 
-(defmacro with-open-window (cmd restrict-class function &rest args )
-  `(progn
-     (setf (first *with-window*) ,function)
-     (setf (second *with-window*) ',args)
-     (setf (third *with-window*) ,restrict-class)
+(defun with-open-window (cmd restrict-class function &rest args )
+  (progn
+     (setf (first *with-window*) function)
+     (setf (second *with-window*) args)
+     (setf (third *with-window*) restrict-class)
      (add-hook *focus-window-hook* 'with-window-hanger)
-     (run-shell-command ,cmd)))
+     (run-shell-command cmd)))
 
 (defun with-window-hanger (cwin lwin)
   (declare (ignore lwin))
