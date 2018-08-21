@@ -40,7 +40,9 @@
   (if (third *with-window*)
       (when (equal (window-class cwin)
 		   (third *with-window*))
-	(reduce (first *with-window*) (cons  cwin (second *with-window*)))
+	(if (second *with-window*)
+	    (reduce (first *with-window*) (cons  cwin (second *with-window*)))
+	    (funcall (first *with-window*) cwin))
 	(remove-hook *focus-window-hook* 'with-window-hanger))
       (progn
 	(reduce (first *with-window*) (cons cwin (second *with-window*)))
