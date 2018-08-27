@@ -23,6 +23,25 @@
 ;;(with-open-windows "cool-retro-term" nil #'float-window (current-group)
 ;;;This will float the window once its running. 
 
+;;; Heres a practical example that will open emacs to an org buffer, reclassify it, and float it. 
+;;; if this window already exists, raise it, unless its in a different group, in which case prompt 
+;;; the user to choose to jump to it, or stay in the current group. 
+
+(defcommand notes () ()
+  (if-let ((win (fuzzy-finder '((:class "|FLOAT|Notes")) ;*window-format* t t
+			      )))
+    (if (eq (window-group win) (current-group))
+	(raise win)
+	(eval (second (select-from-menu (current-screen) `(("Jump to Notes" (raise ,win))
+				    ("Stay Here" nil)))))
+    (with-open-window "emacs ~/.stumpwm.d/notes.org" nil #'(lambda (cwin)
+							     (float-in-tiles cwin "Notes")
+							     ;;(toggle-always-on-top)
+							     (meta (kbd "M->"))
+							     ;;(window-send-string "C-x 1")
+							     (meta (kbd "C-x"))
+							     (meta (kbd "1"))))))
+
 (defparameter *with-window*
 ;  "function, arguments, class restrictor."
   '(nil nil nil))
